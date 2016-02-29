@@ -1,4 +1,5 @@
-DB_URL = 'sqlite:///congress.db'
+ROOT = '/home/isaac/Documents/olin/4-semester/data-science/DataScience16CTW'
+DB_URL = 'sqlite:///' + ROOT + '/data/congress.db'
 
 from sqlalchemy import create_engine
 engine = create_engine(DB_URL)
