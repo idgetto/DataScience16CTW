@@ -26,10 +26,29 @@ class Candidate(Base):
 	mail_state = Column(String(2), nullable=True)
 	mail_zip = Column(String(9), nullable=True)
 
+class Committee(Base):
+	__tablename__ = 'committee'
+	id = Column(String(9), nullable=False, primary_key=True)
+	name = Column(String(200))
+	treasurer = Column(String(90))
+	street1 = Column(String(34))
+	street2 = Column(String(34))
+	city = Column(String(30))
+	state = Column(String(2))
+	zip = Column(String(9))
+	designation = Column(String(1))
+	committee_type = Column(String(1))
+	party = Column(String(3))
+	filling_freq = Column(String(1))
+	organization_type = Column(String(1))
+	organization_name = Column(String(200))
+	candidate_id = Column(String(9), ForeignKey('candidate.id'))
+	candidate = relationship(Candidate)
+
 class Contribution(Base):
 	__tablename__ = 'contribution'
 	id = Column(Integer, nullable=False, primary_key=True)
-	committee_id = Column(String(9))
+	committee_id = Column(String(9), ForeignKey('committee.id'))
 	amendment = Column(String(1))
 	report_type = Column(String(3))
 	tx_pgi = Column(String(5))
@@ -51,25 +70,8 @@ class Contribution(Base):
 	memo_code = Column(String(1))
 	memo_text = Column(String(100))
 	candidate = relationship(Candidate)
+	committee = relationship(Committee)
 
-class Committee(Base):
-	__tablename__ = 'committee'
-	id = Column(String(9), nullable=False, primary_key=True)
-	name = Column(String(200))
-	treasurer = Column(String(90))
-	street1 = Column(String(34))
-	street2 = Column(String(34))
-	city = Column(String(30))
-	state = Column(String(2))
-	zip = Column(String(9))
-	designation = Column(String(1))
-	committee_type = Column(String(1))
-	party = Column(String(3))
-	filling_freq = Column(String(1))
-	organization_type = Column(String(1))
-	organization_name = Column(String(200))
-	candidate_id = Column(String(9), ForeignKey('candidate.id'))
-	candidate = relationship(Candidate)
 
 # Create an engine that stores data in the local directory's
 # sqlalchemy_example.db file.
