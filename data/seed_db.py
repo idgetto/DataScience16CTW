@@ -12,7 +12,10 @@ def seed_candidates():
 	from setup_db import Candidate
 
 	session = create_session()
-	candidates = pd.read_csv('candidates.tsv', sep='\t')
+
+	candidates14 = pd.read_csv('candidates14.tsv', sep='\t')
+	candidates16 = pd.read_csv('candidates16.tsv', sep='\t')
+	candidates = pd.concat([candidates14, candidates16], ignore_index=True)
 
 	# Check if seeding has already been done
 	num_candidates= len(candidates)
@@ -22,9 +25,6 @@ def seed_candidates():
 
 	print 'Importing candidates...'
 	for (idx, cand_data) in candidates.iterrows():
-
-		if idx % 1000 == 0:
-			print 'Imported %d candidates' % idx
 
 		candidate = Candidate(id 			  = cand_data.CAND_ID,
 							  name 			  = cand_data.CAND_NAME,
@@ -42,7 +42,11 @@ def seed_candidates():
 							  mail_state 	  = cand_data.CAND_ST,
 							  mail_zip 		  = cand_data.CAND_ZIP)
 
-		session.add(candidate)
+		session.merge(candidate)
+
+		if idx % 1000 == 0:
+			session.commit()
+			print 'Imported %d candidates' % idx
 
 	# Save changes
 	session.commit()
@@ -81,7 +85,9 @@ def seed_contributions():
 		'MEMO_CD': str,
 		'MEMO_TEXT': str
 	}
-	contributions = pd.read_csv('contributions.tsv', sep='\t', dtype=col_types)
+	contributions14 = pd.read_csv('contributions14.tsv', sep='\t', dtype=col_types)
+	contributions16 = pd.read_csv('contributions16.tsv', sep='\t', dtype=col_types)
+	contributions = pd.concat([contributions14, contributions16], ignore_index=True)
 
 	# Check if seeding has already been done
 	num_contributions = len(contributions)
@@ -91,9 +97,6 @@ def seed_contributions():
 
 	print 'Importing contributions...'
 	for (idx, contra_data) in contributions.iterrows():
-		if idx % 1000 == 0:
-			print 'Imported %d contributions' % idx
-
 		try:
 			tx_date_str = contra_data.TRANSACTION_DT
 			tx_date = datetime.datetime.strptime(tx_date_str, "%m%d%Y").date()
@@ -125,6 +128,11 @@ def seed_contributions():
 
 		session.add(contribution)
 
+		if idx % 1000 == 0:
+			session.commit()
+			print 'Imported %d contributions' % idx
+
+
 	# Save changes
 	session.commit()
 
@@ -137,7 +145,10 @@ def seed_committees():
 	from setup_db import Committee
 
 	session = create_session()
-	committees = pd.read_csv('committees.tsv', sep='\t', dtype=str)
+
+	committees14 = pd.read_csv('committees14.tsv', sep='\t', dtype=str)
+	committees16 = pd.read_csv('committees16.tsv', sep='\t', dtype=str)
+	committees = pd.concat([committees14, committees16], ignore_index=True)
 
 	# Check if data is already imported
 	num_committees = len(committees)
@@ -147,9 +158,6 @@ def seed_committees():
 
 	print 'Importing candidates...'
 	for (idx, comm_data) in committees.iterrows():
-		if idx % 1000 == 0:
-			print 'Imported %d committees' % idx
-
 		committee = Committee(id   			 	= comm_data.CMTE_ID,
 							  name 			 	= comm_data.CMTE_NM,
 							  treasurer      	= comm_data.TRES_NM,
@@ -166,7 +174,12 @@ def seed_committees():
 							  organization_name = comm_data.CONNECTED_ORG_NM,
 							  candidate_id 		= comm_data.CAND_ID)
 
-		session.add(committee)
+		session.merge(committee)
+
+		if idx % 1000 == 0:
+			session.commit()
+			print 'Imported %d committees' % idx
+
 
 	# Save changes
 	session.commit()
