@@ -21,20 +21,28 @@ A great deal of the work we did so far was acquiring and cleaning our data. We f
 
 In order to decide on what story to tell, we decided to see what the data reported. The first thing we looked at was the role of contributions in a senator's election. We looked into this by visualizing the contributions given to candidates over time.
 
-    CONTRIBUTIONS OVER TIME
+![sullivan-contributions](img/sullivan-contributions.png)
+
+![perdue-contributions](img/perdue-contributions.png)
+
+![ernst-contributions](img/ernst-contributions.png)
 
 We also looked at which committees contributed most to each candidate. We want to use this information to see how often the candidate sponsors and votes for bills supported by that interest group.
 
-    CONTRIBUTIONS BY COMMITTEE
+![sullivan-committees](img/sullivan-committees.png)
 
-Another factor we wanted to investigate was the influence of each senator. One way to represent influence is to see how often a senator's vote on a bill relates to the outcome. A senator who often votes for a bills that pass and against bills that end up failing would have high influence.
+![perdue-committees](img/perdue-committees.png)
 
-    SENATOR INFLUENCE BY VOTING
+![ernst-committees](img/ernst-committees.png)
+
+
+Another factor we wanted to investigate was the influence of each senator. We started to look into this idea by visualizing how often each senator actually votes. Later, We plan to also plot how often bills pass when a senator votes for them and how often bills fail when a senator votes against them.
+
+![missed-votes](img/missed-votes.png)
 
 A final factor we wanted to study was which topics senators were most concerned with. Different bills have different topics of interest, so we can see a senator's concern with a given topic by looking at how often they sponsor and vote for bills with that topic.
 
-    SENATOR TOPICS OF INTEREST
-
+![topics-of-interest](img/votes-on-subjects.png)
 
 ## What is the minimum viable product that you will have done by next Friday? ##
 
