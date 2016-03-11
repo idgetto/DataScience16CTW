@@ -15,7 +15,7 @@ Follow these steps to run our deliverable jupyter notebook:
 
 ### rollCallVotes_cleaned.csv
 
-In order to create the initial rollCallVotes.csv file:
+In order to create the initial rollCallVotes_iter4.csv file:
 
 1. install bs4, lxml, pandas
 2. run 'jupyter notebook data/rollCallVotes_createCsv.ipynb'
@@ -35,7 +35,7 @@ Column | Contains
 `voteDate` | the date of the roll call vote
 `voteResult` | the result of the vote
 
-Now in order to create the cleaned rollCallVotes.csv file, having created the initial file rollCallVotes_iter4.csv:
+Now in order to create the rollCallVotes_cleaned.csv file, having created the initial file rollCallVotes_iter4.csv:
 
 run 'jupyter notebook data/rollCallVotes_cleanCsv.ipynb'
 
