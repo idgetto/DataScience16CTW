@@ -21,7 +21,7 @@ We used three files from the FEC:
 * The Committee Master File
 * The Contributions to Candidate from Committees file
 
-Using these three files, we setup a sqlite database with sqlalchemy as our object relational mapper. The code that creates the database can be found in [data/congress_db.py](./data/setup_db.py) and [data/seed_db.py](./data/seed_db.py). In `setup_db.py` we create three tables `Candidate`, `Committee`, and `Contribution`. We then make queries to the database to find information related to each of the tables.
+Using these three files, we setup a sqlite database with sqlalchemy as our object relational mapper. The code that creates the database can be found in [data/setup_db.py](./data/setup_db.py) and [data/seed_db.py](./data/seed_db.py). In `setup_db.py` we create three tables `Candidate`, `Committee`, and `Contribution`. We then make queries to the database to find information related to each of the tables.
 
 The tables contain the following data:
 
