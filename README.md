@@ -63,6 +63,52 @@ The tables contain the following data:
 | `organization_name` | connected organization's name                                                                                                                                                       |
 | `candidate_id`      | id of associated candidate  
 
+### Contribution
+
+| **Column**     | **Contains**                                                                                                                                                                                                   |
+|----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `id`           | unique contribution id                                                                                                                                                                                         |
+| `committee_id` | a 9-character alpha-numeric code assigned to a committee by the Federal Election Commission                                                                                                                    |
+| `amendment`    | indicates if the report being filed is new (N), an amendment (A) to a previous report, or a termination (T) report                                                                                             |
+| `report_type`  | type of report; [report types](http://www.fec.gov/finance/disclosure/metadata/ReportTypeCodes.shtml)                                                                                                           |
+| `tx_pgi`       | code indicates the,election for which the contribution was made                                                                                                                                                |
+| `entity_type`  | type of entity (CAN=Candidate, CCM=Candidate Committee, COM=Committee, IND=Individual (a person), ORG=Organization (not a committee and not a person), PAC=Political Action Committee, PTY=Party Organization) |
+| `name`         | recipient/payee                                                                                                                                                                                                |
+| `city`         | city/town                                                                                                                                                                                                      |
+| `state`        | state                                                                                                                                                                                                          |
+| `zip`          | zip code                                                                                                                                                                                                       |
+| `employer`     | employer                                                                                                                                                                                                       |
+| `occupation`   | occupation                                                                                                                                                                                                     |
+| `tx_date`      | transaction date                                                                                                                                                                                               |
+| `tx_amount`    | transaction amount                                                                                                                                                                                             |
+| `other_id`     | FEC ID of the recipient committee or the supported or opposed candidate ID                                                                                                                                     |
+| `candidate_id` | id if candidate receiving the contribution                                                                                                                                                                     |
+| `tx_id`        | unique identifier associated with each itemization or transaction appearing in an FEC electronic file                                                                                                          |
+| `file`         | unique report id                                                                                                                                                                                               |
+| `memo_code`    | memo code                                                                                                                                                                                                      |
+| `memo_text`    | description of the activity                                                                                                                                                                                    |
+
+### Querying Contribution Data
+
+We use sqlalchemy in order to query data from the contribution database. For example, we can find the total contribution amount of candidates grouped by state.
+
+```python
+import congress_db
+from setup_db import Candidate, Contribution, Committee
+from sqlalchemy import func
+
+session = congress_db.create_session()
+
+session.query(Candidate.office_st,
+              func.sum(Contribution.tx_amount).label('total_contr')).\
+        join(Contribution).\
+        group_by(Candidate.office_st).\
+        order_by('total_contr desc').\
+        all()
+
+# => [(u'US', 110900511.0), (u'CA', 94463385.0), (u'NC', 86051685.0), ...]
+```
+
 ### rollCallVotes_cleaned.csv
 
 In order to create the initial rollCallVotes_iter4.csv file:
